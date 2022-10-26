@@ -22,6 +22,7 @@ app.get("/", (req, res) => {
     });
 });
 app.use("/api/order", require('./routes/order'));
+app.use("/api/analysis", require('./routes/analysis'));
 app.listen(
     process.env.PORT,
     console.log(`Run at http//localhost:${process.env.PORT}`)

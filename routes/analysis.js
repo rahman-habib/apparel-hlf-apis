@@ -4,13 +4,10 @@ const { check, validationResult } = require('express-validator');
 const newSupply = require("../app");
 //Order Routes
 route.post(
-    "/create-order", [
-    check("orderId", "orderID is required!").not().isEmpty(),
-    check("email", "email is required!").not().isEmpty(),
-    check("vendorInfo", "vendorInfo is required!").not().isEmpty(),
-    check("brandName", "brandName is required!").not().isEmpty(),
-    check("product", "product is required!").not().isEmpty(),
-    check("materialRequirement", "materialRequirement is required!").not().isEmpty(),
+    "/create-analysis/:id", [
+    check("analysedBy", "analysisBy is required!").not().isEmpty(),
+    check("analysedDate", "analysisDate is required!").not().isEmpty(),
+    
 ],
 async(req,res)=>{
     const errors=validationResult(req);
@@ -20,16 +17,18 @@ async(req,res)=>{
     }
     
     try {
-        
+        await newSupply.sync();
+        const data=newSupply.getOrder(req.params.id);
        let order={
-        orderId:req.body.orderId,
-        email:req.body.email,
-        vendorInfo:req.body.vendorInfo,
-        brandName:req.body.brandName,
-        product:req.body.product,
-        materialRequirement:req.body.materialRequirement,
+        orderId:data.orderId,
+        email:data.email,
+        brandName:data.brandName,
+        product:data.product,
+        materialRequirement:data.materialRequirement,
+        analysedBy:req.body.analysedBy,
+        analysedDate:req.body.analysedDate,
        };
-       newSupply.createOrder(order);
+       newSupply.createAnalysisAndDevelopment(order);
        await newSupply.sync();
        console.log("owner: ",newSupply.owner);
        console.log("location: ",newSupply.location);
@@ -37,15 +36,16 @@ async(req,res)=>{
        let txnId=newSupply.location.slice(0,-3);
        console.log("txnId: ",txnId)
        let obj={
-        orderId:req.body.orderId,
-        email:req.body.email,
-        vendorInfo:req.body.vendorInfo,
-        brandName:req.body.brandName,
-        product:req.body.product,
-        materialRequirement:req.body.materialRequirement,
+        orderId:data.orderId,
+        email:data.email,
+        brandName:data.brandName,
+        product:data.product,
+        materialRequirement:data.materialRequirement,
+        analysedBy:req.body.analysedBy,
+        analysedDate:req.body.analysedDate,
         txnId:txnId,
        };
-       newSupply.appendTxIdOrder(obj);
+       newSupply.appendTxIdAnalysis(obj);
        return res.status(200).json({
         msg: "order saved in blockchain",
         txnid:txnId,
@@ -58,29 +58,29 @@ async(req,res)=>{
 
 }
 );
-route.get('/get-order/:id',async(req,res)=>{
+route.get('/get-analysis/:id',async(req,res)=>{
     if(req.params.id==null||req.params.id.trim().length<=0){
         return res.status(400).json({error: "Order Id is required"});
     }
     try {
         await newSupply.sync();
-        const data=newSupply.getOrder(req.params.id);
+        const data=newSupply.getAnalysisAndDevelopment(req.params.id);
         console.log(data)
-        return res.status(200).json({OrderState:data});
+        return res.status(200).json({AnalysisState:data});
     } catch (error) {
         console.log(error)
         return res.status(500).json({Error:error});
     }
 })
-route.get('/get-order-history/:id',async(req,res)=>{
+route.get('/get-analysis-history/:id',async(req,res)=>{
     if(req.params.id==null||req.params.id.trim().length<=0){
         return res.status(400).json({error: "Order Id is required"});
     }
     try {
         await newSupply.sync();
-        const data=newSupply.getOrderHistory(req.params.id);
+        const data=newSupply.getAnalysisHistory(req.params.id);
         console.log(data)
-        return res.status(200).json({OrderState:data});
+        return res.status(200).json({AnalysisState:data});
     } catch (error) {
         console.log(error)
         return res.status(500).json({Error:error});
