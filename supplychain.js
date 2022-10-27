@@ -254,7 +254,7 @@ class SupplyChain extends Jig{
     }
     getRfid(id){
         try {
-            let data=this.RFID.filter((rd)=>rd.orderId==id);
+            let data=this.RFID.filter((rd)=>rd.rfid==id);
             data.reverse();
             return data[0];
         } catch (error) {
@@ -263,7 +263,7 @@ class SupplyChain extends Jig{
     }
     getRfidHistory(id){
         try {
-            return this.RFID.filter((rd)=>rd.orderId==id);
+            return this.RFID.filter((rd)=>rd.rfid==id);
         } catch (error) {
             return false;
         }

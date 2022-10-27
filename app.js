@@ -38,6 +38,13 @@ app.get("/", (req, res) => {
 });
 app.use("/api/order", require('./routes/order'));
 app.use("/api/analysis", require('./routes/analysis'));
+app.use("/api/process", require('./routes/process'));
+app.use("/api/cutting", require('./routes/cuttingProcess'));
+app.use("/api/stitching", require('./routes/stitching'));
+app.use("/api/quality", require('./routes/quality'));
+app.use("/api/packing", require('./routes/packing'));
+app.use("/api/rfid", require('./routes/verify'));
+app.use("/api/supply", require('./routes/supplyFlow'));
 app.listen(
     process.env.PORT,
     console.log(`Run at http//localhost:${process.env.PORT}`)
