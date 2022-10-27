@@ -120,14 +120,14 @@ class SupplyChain extends Jig{
     }
     getCuttingProcessHistory(id){
         try {
-            return this.CuttingProcess.filter((cp)=>cp.orderId==id);
+            return this.CuttingProcess.filter((cp)=>cp.rfid==id);
         } catch (error) {
             return false;
         }
     }
     getCuttingProcess(id){
         try {
-            let data=this.CuttingProcess.filter((cp)=>cp.orderId==id);
+            let data=this.CuttingProcess.filter((cp)=>cp.rfid==id);
             data.reverse();
             return data[0];
         } catch (error) {
@@ -153,7 +153,7 @@ class SupplyChain extends Jig{
     }
     getStitchingProcessHistory(id){
         try {
-           return this.StitchingProcess.filter((sp)=>sp.orderId==id);
+           return this.StitchingProcess.filter((sp)=>sp.rfid==id);
 
         } catch (error) {
             return false;
@@ -161,7 +161,7 @@ class SupplyChain extends Jig{
     }
     getStitchingProcess(id){
         try {
-            let data=this.StitchingProcess.filter((sp)=>sp.orderId==id);
+            let data=this.StitchingProcess.filter((sp)=>sp.rfid==id);
             data.reverse();
             return data[0];
         } catch (error) {
@@ -187,7 +187,7 @@ class SupplyChain extends Jig{
     }
     getQualityProcessHistory(id){
         try {
-            return this.QualityProcess.filter((qp)=>qp.orderId==id);
+            return this.QualityProcess.filter((qp)=>qp.rfid==id);
 
         } catch (error) {
             return false;
@@ -195,7 +195,7 @@ class SupplyChain extends Jig{
     }
     getQualityProcess(id){
         try {
-            let data=this.QualityProcess.filter((qp)=>qp.orderId==id);
+            let data=this.QualityProcess.filter((qp)=>qp.rfid==id);
             data.reverse();
             return data[0];
         } catch (error) {
@@ -221,14 +221,14 @@ class SupplyChain extends Jig{
     }
     getPackingProcessHistory(id){
         try {
-            return this.PackingProcess.filter((pp)=>pp.orderId==id);
+            return this.PackingProcess.filter((pp)=>pp.rfid==id);
         } catch (error) {
             return false;
         }
     }
     getPackingProcess(id){
         try {
-            let data=this.PackingProcess.filter((pp)=>pp.orderId==id);
+            let data=this.PackingProcess.filter((pp)=>pp.rfid==id);
             data.reverse();
             return data[0];
         } catch (error) {

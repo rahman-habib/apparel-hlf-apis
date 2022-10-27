@@ -6,7 +6,7 @@ const newSupply = require("../app");
 route.post(
     "/create-process/:id", [
     check("processedBy", "processedBy is required!").not().isEmpty(),
-    check("Date", "Date is required!").not().isEmpty(),
+    check("date", "date is required!").not().isEmpty(),
     
 ],
 async(req,res)=>{
@@ -26,7 +26,7 @@ async(req,res)=>{
         product:data.product,
         materialRequirement:data.materialRequirement,
         processedBy:req.body.processedBy,
-        Date:req.body.Date,
+        date:req.body.date,
        };
        newSupply.createProcesses(order);
        await newSupply.sync();
@@ -42,7 +42,7 @@ async(req,res)=>{
         product:data.product,
         materialRequirement:data.materialRequirement,
         processedBy:req.body.processedBy,
-        Date:req.body.Date,
+        date:req.body.date,
         txnId:txnId,
        };
        newSupply.appendTxIdProcesses(obj);
