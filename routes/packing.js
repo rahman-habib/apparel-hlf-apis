@@ -5,7 +5,7 @@ const newSupply = require("../app");
 //Order Routes
 route.post(
     "/create-packing/:id", [
-    check("Date", "Date is required!").not().isEmpty(),
+    check("date", "date is required!").not().isEmpty(),
     check("workerId", "workerId is required!").not().isEmpty(),
     check("workerName", "workerName is required!").not().isEmpty(),
     check("rfid", "rfid is required!").not().isEmpty(),
@@ -27,7 +27,7 @@ async(req,res)=>{
         brandName:data.brandName,
         product:data.product,
         materialRequirement:data.materialRequirement,
-        Date:req.body.Date,
+        date:req.body.date,
         workerId:req.body.workerId,
         workerName:req.body.workerName,
         rfid:req.body.rfid,
@@ -45,7 +45,7 @@ async(req,res)=>{
         brandName:data.brandName,
         product:data.product,
         materialRequirement:data.materialRequirement,
-        Date:req.body.Date,
+        date:req.body.date,
         workerId:req.body.workerId,
         workerName:req.body.workerName,
         rfid:req.body.rfid,
@@ -84,7 +84,7 @@ route.get('/get-packing-process-history/:id',async(req,res)=>{
     }
     try {
         await newSupply.sync();
-        const data=newSupply.getProcessesHistory(req.params.id);
+        const data=newSupply.getPackingProcessHistory(req.params.id);
         console.log(data)
         return res.status(200).json({PackingProcess:data});
     } catch (error) {

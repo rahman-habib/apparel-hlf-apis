@@ -5,7 +5,7 @@ const newSupply = require("../app");
 //Order Routes
 route.post(
     "/create-rfid/:id", [
-    check("rfidId", "rfidId is required!").not().isEmpty(),
+    check("rfid", "rfid is required!").not().isEmpty(),
     check("brandName", "brandNAme is required!").not().isEmpty(),
     check("product", "product is required!").not().isEmpty(),
     check("madeIn", "madeIn is required!").not().isEmpty(),
