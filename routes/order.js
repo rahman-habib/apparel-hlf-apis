@@ -10,6 +10,7 @@ route.post(
     check("vendorInfo", "vendorInfo is required!").not().isEmpty(),
     check("brandName", "brandName is required!").not().isEmpty(),
     check("product", "product is required!").not().isEmpty(),
+    check("productQuantity", "productQuantity is required!").not().isEmpty(),
     check("materialRequirement", "materialRequirement is required!").not().isEmpty(),
 ],
 async(req,res)=>{
@@ -27,6 +28,7 @@ async(req,res)=>{
         vendorInfo:req.body.vendorInfo,
         brandName:req.body.brandName,
         product:req.body.product,
+        productQuantity:req.body.productQuantity,
         materialRequirement:req.body.materialRequirement,
        };
        newSupply.createOrder(order);
@@ -42,6 +44,7 @@ async(req,res)=>{
         vendorInfo:req.body.vendorInfo,
         brandName:req.body.brandName,
         product:req.body.product,
+        productQuantity:req.body.productQuantity,
         materialRequirement:req.body.materialRequirement,
         txnId:txnId,
        };

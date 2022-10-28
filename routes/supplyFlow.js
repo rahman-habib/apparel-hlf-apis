@@ -18,9 +18,11 @@ async(req,res)=>{
     
     try {
         await newSupply.sync();
-        const data=newSupply.getOrder(req.params.id);
-        await newSupply.sync();
         const dataanalysis=newSupply.getAnalysisAndDevelopment(req.params.id);
+        if(dataanalysis.poState=="completed"){
+        await newSupply.sync();
+        const data=newSupply.getOrder(req.params.id);
+        
         
        let order={
         orderId:data.orderId,
@@ -55,6 +57,12 @@ async(req,res)=>{
         msg: "order saved in blockchain",
         txnid:txnId,
        });
+    }
+    else{
+        return res.status(400).json({
+            msg: "Please Complete PoNo First Then supply available!",
+           });
+    }
     } catch (error) {
         console.log(error);
         return res.status(500).json({Error:error});

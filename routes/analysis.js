@@ -8,6 +8,8 @@ route.post(
     check("analysedBy", "analysisBy is required!").not().isEmpty(),
     check("date", "date is required!").not().isEmpty(),
     check("madeIn", "madeIn is required!").not().isEmpty(),
+    check("analysisState", "analysisState is required!").not().isEmpty(),
+    check("poState", "poState is required!").not().isEmpty(),
     check("manufactureInfo", "manufactureInfo is required!").not().isEmpty(),
     
 ],
@@ -26,11 +28,14 @@ async(req,res)=>{
         email:data.email,
         brandName:data.brandName,
         product:data.product,
+        productQuantity:data.productQuantity,
         materialRequirement:data.materialRequirement,
         analysedBy:req.body.analysedBy,
         madeIn:req.body.madeIn,
         manufactureInfo:req.body.manufactureInfo,
         date:req.body.date,
+        analysisState:req.body.analysisState,
+        poState:req.body.poState,
        };
        newSupply.createAnalysisAndDevelopment(order);
        await newSupply.sync();
@@ -49,6 +54,9 @@ async(req,res)=>{
         madeIn:req.body.madeIn,
         manufactureInfo:req.body.manufactureInfo,
         date:req.body.date,
+        analysisState:req.body.analysisState,
+        poState:req.body.poState,
+        productQuantity:data.productQuantity,
         txnId:txnId,
        };
        newSupply.appendTxIdAnalysis(obj);
@@ -72,7 +80,7 @@ route.get('/get-analysis/:id',async(req,res)=>{
         await newSupply.sync();
         const data=newSupply.getAnalysisAndDevelopment(req.params.id);
         console.log(data)
-        return res.status(200).json({AnalysisState:data});
+        return res.status(200).json({Analysis:data});
     } catch (error) {
         console.log(error)
         return res.status(500).json({Error:error});
@@ -86,7 +94,7 @@ route.get('/get-analysis-history/:id',async(req,res)=>{
         await newSupply.sync();
         const data=newSupply.getAnalysisHistory(req.params.id);
         console.log(data)
-        return res.status(200).json({AnalysisState:data});
+        return res.status(200).json({Analysis:data});
     } catch (error) {
         console.log(error)
         return res.status(500).json({Error:error});

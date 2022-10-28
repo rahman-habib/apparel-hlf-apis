@@ -8,6 +8,7 @@ route.post(
     check("date", "date is required!").not().isEmpty(),
     check("workerId", "workerId is required!").not().isEmpty(),
     check("workerName", "workerName is required!").not().isEmpty(),
+    check("cuttingState", "cuttingState is required!").not().isEmpty(),
     check("rfid", "rfid is required!").not().isEmpty(),
     
 ],
@@ -20,6 +21,12 @@ async(req,res)=>{
     
     try {
         await newSupply.sync();
+        const processdata=newSupply.getProcesses(req.params.id);
+        if(processdata.processState=="completed"){
+
+        
+
+        await newSupply.sync();
         const data=newSupply.getOrder(req.params.id);
        let order={
         orderId:data.orderId,
@@ -30,6 +37,7 @@ async(req,res)=>{
         date:req.body.date,
         workerId:req.body.workerId,
         workerName:req.body.workerName,
+        cuttingState:req.body.cuttingState,
         rfid:req.body.rfid,
        };
        newSupply.createCuttingProcess(order);
@@ -48,6 +56,7 @@ async(req,res)=>{
         date:req.body.date,
         workerId:req.body.workerId,
         workerName:req.body.workerName,
+        cuttingState:req.body.cuttingState,
         rfid:req.body.rfid,
         txnId:txnId,
        };
@@ -56,6 +65,13 @@ async(req,res)=>{
         msg: "order saved in blockchain",
         txnid:txnId,
        });
+    }
+    else{
+        return res.status(400).json({
+            msg: "Please Complete Processes First Then CuttingProcess!",
+           });
+    }
+
     } catch (error) {
         console.log(error);
         return res.status(500).json({Error:error});

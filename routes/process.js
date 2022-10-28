@@ -7,6 +7,7 @@ route.post(
     "/create-process/:id", [
     check("processedBy", "processedBy is required!").not().isEmpty(),
     check("date", "date is required!").not().isEmpty(),
+    check("processState", "processState is required!").not().isEmpty(),
     
 ],
 async(req,res)=>{
@@ -18,15 +19,21 @@ async(req,res)=>{
     
     try {
         await newSupply.sync();
+        const analysisdata=newSupply.getAnalysisAndDevelopment(req.params.id);
+        if(analysisdata.analysisState=="completed")
+       { await newSupply.sync();
         const data=newSupply.getOrder(req.params.id);
        let order={
         orderId:data.orderId,
         email:data.email,
         brandName:data.brandName,
         product:data.product,
+        productQuantity:data.productQuantity,
         materialRequirement:data.materialRequirement,
         processedBy:req.body.processedBy,
         date:req.body.date,
+        
+        processState:req.body.processState,
        };
        newSupply.createProcesses(order);
        await newSupply.sync();
@@ -40,9 +47,11 @@ async(req,res)=>{
         email:data.email,
         brandName:data.brandName,
         product:data.product,
+        productQuantity:data.productQuantity,
         materialRequirement:data.materialRequirement,
         processedBy:req.body.processedBy,
         date:req.body.date,
+        processState:req.body.processState,
         txnId:txnId,
        };
        newSupply.appendTxIdProcesses(obj);
@@ -50,6 +59,11 @@ async(req,res)=>{
         msg: "order saved in blockchain",
         txnid:txnId,
        });
+    }else{
+        return res.status(400).json({
+            msg: "Please Complete Analysis First Then Processes!",
+           });
+    }
     } catch (error) {
         console.log(error);
         return res.status(500).json({Error:error});
@@ -66,7 +80,7 @@ route.get('/get-process/:id',async(req,res)=>{
         await newSupply.sync();
         const data=newSupply.getProcesses(req.params.id);
         console.log(data)
-        return res.status(200).json({ProcessState:data});
+        return res.status(200).json({Process:data});
     } catch (error) {
         console.log(error)
         return res.status(500).json({Error:error});
@@ -80,7 +94,7 @@ route.get('/get-process-history/:id',async(req,res)=>{
         await newSupply.sync();
         const data=newSupply.getProcessesHistory(req.params.id);
         console.log(data)
-        return res.status(200).json({ProcessState:data});
+        return res.status(200).json({Process:data});
     } catch (error) {
         console.log(error)
         return res.status(500).json({Error:error});
