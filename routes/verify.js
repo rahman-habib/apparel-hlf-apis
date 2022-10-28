@@ -26,7 +26,7 @@ async(req,res)=>{
        let order={
         brandName:data.brandName,
         product:data.product,
-        workerName:req.body.workerName,
+      
         madeIn:dataanalysis.madeIn,
         rfid:req.body.rfid,
        };
@@ -43,9 +43,6 @@ async(req,res)=>{
         brandName:data.brandName,
         product:data.product,
         materialRequirement:data.materialRequirement,
-        Date:req.body.Date,
-        workerId:req.body.workerId,
-        workerName:req.body.workerName,
         madeIn:dataanalysis.madeIn,
         rfid:req.body.rfid,
         txnId:txnId,
