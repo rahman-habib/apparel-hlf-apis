@@ -7,6 +7,10 @@ route.post(
     "/create-process/:id", [
     check("processedBy", "processedBy is required!").not().isEmpty(),
     check("date", "date is required!").not().isEmpty(),
+    check("cutBY", "cutBy is required!").not().isEmpty(),
+    check("stitchBY", "stitchBY is required!").not().isEmpty(),
+    check("qualityBy", "qualityBy is required!").not().isEmpty(),
+    check("packBy", "packBy is required!").not().isEmpty(),
     check("processState", "processState is required!").not().isEmpty(),
     
 ],
@@ -32,7 +36,10 @@ async(req,res)=>{
         materialRequirement:data.materialRequirement,
         processedBy:req.body.processedBy,
         date:req.body.date,
-        
+        cutBy:req.body.cutBy,
+        stichBy:req.body.stichBy,
+        qualityBy:req.body.qualityBy,
+        packBy:req.body.packBy,
         processState:req.body.processState,
        };
        newSupply.createProcesses(order);
@@ -51,6 +58,10 @@ async(req,res)=>{
         materialRequirement:data.materialRequirement,
         processedBy:req.body.processedBy,
         date:req.body.date,
+        cutBy:req.body.cutBy,
+        stichBy:req.body.stichBy,
+        qualityBy:req.body.qualityBy,
+        packBy:req.body.packBy,
         processState:req.body.processState,
         txnId:txnId,
        };
