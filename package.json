@@ -1,30 +1,49 @@
 {
-  "name": "run-sdk",
-  "version": "0.6.37",
-  "description": "A platform to build apps and tokens on Bitcoin",
-  "keywords": [
-    "javascript",
-    "jig",
-    "jigs",
-    "berry",
-    "berries",
-    "token",
-    "tokens",
-    "smart contract",
-    "smart contracts",
-    "bitcoin",
-    "bsv",
-    "bitcoin sv"
-  ],
-  "main": "dist/run.node.min.js",
-  "browser": "dist/run.browser.min.js",
-  "license": "MIT",
-  "dependencies": {
-    "bsv": "^1.5.6",
-    "dotenv": "^16.0.3",
-    "express": "^4.18.2",
-    "express-validator": "^6.14.2",
-    "run-sdk": "^0.6.41"
-  },
-  "repository": "git://github.com/runonbitcoin/sdk.git"
+    "name": "fabcar",
+    "version": "1.0.0",
+    "description": "FabCar application implemented in JavaScript",
+    "engines": {
+        "node": ">=8",
+        "npm": ">=5"
+    },
+    "scripts": {
+        "lint": "eslint .",
+        "pretest": "npm run lint",
+        "test": "nyc mocha --recursive"
+    },
+    "engineStrict": true,
+    "author": "Hyperledger",
+    "license": "Apache-2.0",
+    "dependencies": {
+        "fabric-ca-client": "^2.2.4",
+        "dotenv": "^16.0.3",
+        "express": "^4.18.2",
+        "express-validator": "^6.14.2",
+        "fabric-network": "^2.2.4"
+    },
+    
+    "devDependencies": {
+        "chai": "^4.2.0",
+        "eslint": "^5.9.0",
+        "mocha": "^5.2.0",
+        "nyc": "^14.1.1",
+        "sinon": "^7.1.1",
+        "sinon-chai": "^3.3.0"
+    },
+    "nyc": {
+        "exclude": [
+            "coverage/**",
+            "test/**"
+        ],
+        "reporter": [
+            "text-summary",
+            "html"
+        ],
+        "all": true,
+        "check-coverage": true,
+        "statements": 100,
+        "branches": 100,
+        "functions": 100,
+        "lines": 100
+    }
 }
