@@ -142,6 +142,7 @@ app.post(
         check("productUrl", "productUrl is required!").not().isEmpty(),
         check("prductCodes", "prductCodes is required!").not().isEmpty(),
         check("username", "username is required!").not().isEmpty(),
+        check("StartProductionDate", "StartProductionDate is required!").not().isEmpty()
         
     ],
     async (req, res) => {
@@ -173,6 +174,7 @@ app.post(
                         req.body.username,
                         req.body.Accept,
                         JSON.stringify(req.body.materialReqirement),
+                        req.body.StartProductionDate
                     );
                     console.log("Transaction has been submitted");
                     return res.status(200).send("Submited");
@@ -197,7 +199,6 @@ app.post("/api/order-process/:orderId?",
     check("Quality", "Quality is required!").not().isEmpty(),
     check("Packing", "Packing is required!").not().isEmpty(),
     check("inProductionDate", "inProductionDate is required!").not().isEmpty(),
-    check("StartProductionDate", "StartProductionDate is required!").not().isEmpty(),
 ],
 async (req, res) => {
     const errors = validationResult(req);
