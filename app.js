@@ -222,7 +222,6 @@ async (req, res) => {
                   req.body.Quality,
                   req.body.Stiching,
                   req.body.inProductionDate,
-                  req.body.StartProductionDate,
               );
 
               console.log("Transaction has been submitted");
@@ -364,8 +363,7 @@ async (req, res) => {
 app.post("/api/order-packing/:orderId?", 
 [
     check("PackingDate", "PackingDate is required!").not().isEmpty(),
-    check("Delivered", "Delivered is required!").not().isEmpty(),
-    check("DeliveredDate", "DeliveredDate is required!").not().isEmpty(),
+    
    
 ],
 async (req, res) => {
@@ -381,13 +379,13 @@ async (req, res) => {
   }
   try {
       loadNetwork("mychannel", "basic").then(async (contract) => {
+        let date=new Date()
           try {
                await contract.submitTransaction(
                   "PackingOrder",
                   req.params.orderId,
-                  req.body.PackingDate, 
-                  req.body.Delivered, 
-                  req.body.DeliveredDate, 
+                  req.body.PackingDate,  
+                  date.toString(), 
               );
 
               console.log("Transaction has been submitted");
