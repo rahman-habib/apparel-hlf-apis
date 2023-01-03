@@ -242,7 +242,7 @@ async (req, res) => {
 // order Cutting
 app.post("/api/order-Cutting/:orderId?", 
 [
-    check("CuttingDate", "CuttingDate is required!").not().isEmpty(),
+    check("CuttingTrack", "CuttingTrack is required!").not().isEmpty(),
    
 ],
 async (req, res) => {
@@ -262,7 +262,7 @@ async (req, res) => {
                await contract.submitTransaction(
                   "CuttingOrder",
                   req.params.orderId,
-                  req.body.CuttingDate, 
+                  req.body.CuttingTrack, 
               );
 
               console.log("Transaction has been submitted");
@@ -282,7 +282,7 @@ async (req, res) => {
 // order Stiching
 app.post("/api/order-stiching/:orderId?", 
 [
-    check("StichingDate", "StichingDate is required!").not().isEmpty(),
+    check("StichingTrack", "StichingTrack is required!").not().isEmpty(),
    
 ],
 async (req, res) => {
@@ -302,7 +302,7 @@ async (req, res) => {
                await contract.submitTransaction(
                   "StichingOrder",
                   req.params.orderId,
-                  req.body.StichingDate, 
+                  req.body.StichingTrack, 
               );
 
               console.log("Transaction has been submitted");
@@ -322,7 +322,7 @@ async (req, res) => {
 // order Quality
 app.post("/api/order-quality/:orderId?", 
 [
-    check("QualityDate", "QualityDate is required!").not().isEmpty(),
+    check("QualityTrack", "QualityTrack is required!").not().isEmpty(),
    
 ],
 async (req, res) => {
@@ -342,7 +342,7 @@ async (req, res) => {
                await contract.submitTransaction(
                   "QualityOrder",
                   req.params.orderId,
-                  req.body.QualityDate, 
+                  req.body.QualityTrack, 
               );
 
               console.log("Transaction has been submitted");
@@ -362,7 +362,7 @@ async (req, res) => {
 // order Packing
 app.post("/api/order-packing/:orderId?", 
 [
-    check("PackingDate", "PackingDate is required!").not().isEmpty(),
+    check("PackingTrack", "PackingTrack is required!").not().isEmpty(),
     
    
 ],
@@ -384,7 +384,7 @@ async (req, res) => {
                await contract.submitTransaction(
                   "PackingOrder",
                   req.params.orderId,
-                  req.body.PackingDate,  
+                  req.body.PackingTrack,  
                   date.toString(), 
               );
 
