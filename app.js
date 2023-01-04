@@ -163,7 +163,7 @@ app.post(
                         req.body.productQuantity,
                         req.body.productStyleNo,
                         req.body.productUrl,
-                        req.body.manufacturer,
+                        JSON.stringify(req.body.manufacturer),
                         req.body.id,
                         req.body.email,
                         req.body.brandName,
@@ -262,7 +262,7 @@ async (req, res) => {
                await contract.submitTransaction(
                   "CuttingOrder",
                   req.params.orderId,
-                  req.body.CuttingTrack, 
+                  JSON.stringify(req.body.CuttingTrack), 
               );
 
               console.log("Transaction has been submitted");
@@ -302,7 +302,7 @@ async (req, res) => {
                await contract.submitTransaction(
                   "StichingOrder",
                   req.params.orderId,
-                  req.body.StichingTrack, 
+                  JSON.stringify(req.body.StichingTrack), 
               );
 
               console.log("Transaction has been submitted");
@@ -342,7 +342,7 @@ async (req, res) => {
                await contract.submitTransaction(
                   "QualityOrder",
                   req.params.orderId,
-                  req.body.QualityTrack, 
+                  JSON.stringify(req.body.QualityTrack), 
               );
 
               console.log("Transaction has been submitted");
@@ -384,7 +384,7 @@ async (req, res) => {
                await contract.submitTransaction(
                   "PackingOrder",
                   req.params.orderId,
-                  req.body.PackingTrack,  
+                  JSON.stringify(req.body.PackingTrack),  
                   date.toString(), 
               );
 
@@ -420,6 +420,7 @@ async (req, res) => {
       return res.status(400).json({ error: "order ID is required!" });
   }
   try {
+  
       loadNetwork("mychannel", "basic").then(async (contract) => {
           try {
                await contract.submitTransaction(
