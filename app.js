@@ -8,8 +8,8 @@ var express = require("express");
 var app = express();
 
 //Use Methods
-app.use(bodyParser.json({limit: "50mb"}));
-app.use(bodyParser.urlencoded({limit: "50mb", extended: true, parameterLimit:50000}));
+app.use(bodyParser.json({limit: "100mb"}));
+app.use(bodyParser.urlencoded({limit: "100mb", extended: true, parameterLimit:100000}));
 app.use(function (req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
     res.header(
@@ -68,7 +68,7 @@ loadNetwork = (channel, contractName) => {
 //Query All orders
 app.get("/api/query-all-orders", async (req, res) => {
     try {
-        loadNetwork("mychannel", "basic").then(async (contract) => {
+        loadNetwork("apparel", "apparel").then(async (contract) => {
             try {
                 const result = await contract.evaluateTransaction(
                     "QueryAllOrders"
@@ -97,7 +97,7 @@ app.get("/api/query-order/:orderId?", async (req, res) => {
         return res.status(400).json({ error: "order ID is required!" });
     }
     try {
-        loadNetwork("mychannel", "basic").then(async (contract) => {
+        loadNetwork("apparel", "apparel").then(async (contract) => {
             try {
                 const result = await contract.evaluateTransaction(
                     "QueryOrder",
@@ -153,7 +153,7 @@ app.post(
         }
 
         try {
-            loadNetwork("mychannel", "basic").then(async (contract) => {
+            loadNetwork("apparel", "apparel").then(async (contract) => {
                 try {
                     await contract.submitTransaction(
                         "CreateOrder",
@@ -212,7 +212,7 @@ async (req, res) => {
       return res.status(400).json({ error: "order ID is required!" });
   }
   try {
-      loadNetwork("mychannel", "basic").then(async (contract) => {
+      loadNetwork("apparel", "apparel").then(async (contract) => {
           try {
                await contract.submitTransaction(
                   "ProcessOrder",
@@ -240,7 +240,7 @@ async (req, res) => {
 });
 
 // order Cutting
-app.post("/api/order-Cutting/:orderId?", 
+app.post("/api/order-cutting/:orderId?", 
 [
     check("CuttingTrack", "CuttingTrack is required!").not().isEmpty(),
    
@@ -250,14 +250,15 @@ async (req, res) => {
         if (!errors.isEmpty()) {
             return res.status(400).json({ errors: errors.array() });
         }
-  if (
+console.log("request=======>",req.body) ;
+ if (
       req.params.orderId == null ||
       req.params.orderId.trim().length <= 0
   ) {
       return res.status(400).json({ error: "order ID is required!" });
   }
   try {
-      loadNetwork("mychannel", "basic").then(async (contract) => {
+      loadNetwork("apparel", "apparel").then(async (contract) => {
           try {
                await contract.submitTransaction(
                   "CuttingOrder",
@@ -297,7 +298,7 @@ async (req, res) => {
       return res.status(400).json({ error: "order ID is required!" });
   }
   try {
-      loadNetwork("mychannel", "basic").then(async (contract) => {
+      loadNetwork("apparel", "apparel").then(async (contract) => {
           try {
                await contract.submitTransaction(
                   "StichingOrder",
@@ -337,7 +338,7 @@ async (req, res) => {
       return res.status(400).json({ error: "order ID is required!" });
   }
   try {
-      loadNetwork("mychannel", "basic").then(async (contract) => {
+      loadNetwork("apparel", "apparel").then(async (contract) => {
           try {
                await contract.submitTransaction(
                   "QualityOrder",
@@ -378,7 +379,7 @@ async (req, res) => {
       return res.status(400).json({ error: "order ID is required!" });
   }
   try {
-      loadNetwork("mychannel", "basic").then(async (contract) => {
+      loadNetwork("apparel", "apparel").then(async (contract) => {
         let date=new Date()
           try {
                await contract.submitTransaction(
@@ -421,7 +422,7 @@ async (req, res) => {
   }
   try {
   
-      loadNetwork("mychannel", "basic").then(async (contract) => {
+      loadNetwork("apparel", "apparel").then(async (contract) => {
           try {
                await contract.submitTransaction(
                   "OrderMaterialData",
@@ -453,7 +454,7 @@ app.get("/api/query-order-history/:orderId?", async (req, res) => {
         return res.status(400).json({ error: "order ID is required!" });
     }
     try {
-        loadNetwork("mychannel", "basic").then(async (contract) => {
+        loadNetwork("apparel", "apparel").then(async (contract) => {
             try {
                 const result = await contract.evaluateTransaction(
                     "GetHistoryOrder",
